@@ -1,0 +1,10 @@
+import tensorflow as tf
+from tensorflow.keras.applications import ResNet50
+from tensorflow.keras.preprocessing import image
+import numpy as np
+
+# Load the pretrained ResNet50 model
+model = ResNet50(weights='imagenet')
+
+# Optionally, save the model locally for reuse
+model.save('resnet50_model.h5')
