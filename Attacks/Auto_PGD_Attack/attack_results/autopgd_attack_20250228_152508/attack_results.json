@@ -1,0 +1,51 @@
+{
+    "attack_name": "AutoPGD",
+    "parameters": {
+        "epsilon": 0.12549019607843137,
+        "step_size": 0.011764705882352941,
+        "num_steps": 100
+    },
+    "results": [
+        {
+            "image": "test_4378.JPEG",
+            "original_class": 611,
+            "original_class_name": "jigsaw_puzzle",
+            "original_confidence": 0.8657394051551819,
+            "adversarial_class": 611,
+            "adversarial_class_name": "jigsaw_puzzle",
+            "adversarial_confidence": 0.5678324699401855,
+            "confidence_for_original_class": 0.5678324699401855,
+            "confidence_reduction": 0.29790693521499634,
+            "target_class": 701,
+            "target_class_name": "parachute",
+            "success": false,
+            "l2_distance": 48.38756561279297,
+            "attack_time_seconds": 177.41203618049622
+        },
+        {
+            "image": "test_5981.JPEG",
+            "original_class": 510,
+            "original_class_name": "container_ship",
+            "original_confidence": 0.8862098455429077,
+            "adversarial_class": 675,
+            "adversarial_class_name": "moving_van",
+            "adversarial_confidence": 0.7728826403617859,
+            "confidence_for_original_class": 0.13595354557037354,
+            "confidence_reduction": 0.7502562999725342,
+            "target_class": 675,
+            "target_class_name": "moving_van",
+            "success": true,
+            "l2_distance": 48.300594329833984,
+            "attack_time_seconds": 112.17334032058716
+        }
+    ],
+    "total_attack_time_seconds": 289.5853765010834,
+    "summary": {
+        "total_images": 2,
+        "successful_attacks": 1,
+        "success_rate": 0.5,
+        "average_l2_distance": 48.344078063964844,
+        "average_confidence_reduction": 0.5240816175937653,
+        "total_attack_time_seconds": 289.5853765010834
+    }
+}

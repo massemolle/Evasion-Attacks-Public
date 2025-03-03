@@ -1,0 +1,100 @@
+{
+    "attack_name": "AutoPGD",
+    "parameters": {
+        "epsilon": 0.06274509803921569,
+        "step_size": 0.00784313725490196,
+        "num_steps": 100
+    },
+    "results": [
+        {
+            "image": "ILSVRC2012_val_00023534.JPEG",
+            "original_class": 806,
+            "original_class_name": "sock",
+            "original_confidence": 0.9986854195594788,
+            "adversarial_class": 806,
+            "adversarial_class_name": "sock",
+            "adversarial_confidence": 0.9915444850921631,
+            "confidence_for_original_class": 0.9915444850921631,
+            "confidence_reduction": 0.007140934467315674,
+            "target_class": 750,
+            "target_class_name": "quilt",
+            "success": false,
+            "l2_distance": 24.274375915527344,
+            "attack_time_seconds": 106.11772561073303
+        },
+        {
+            "image": "ILSVRC2012_val_00019816.JPEG",
+            "original_class": 289,
+            "original_class_name": "snow_leopard",
+            "original_confidence": 0.9699568748474121,
+            "adversarial_class": 289,
+            "adversarial_class_name": "snow_leopard",
+            "adversarial_confidence": 0.9481778144836426,
+            "confidence_for_original_class": 0.9481778144836426,
+            "confidence_reduction": 0.02177906036376953,
+            "target_class": 288,
+            "target_class_name": "leopard",
+            "success": false,
+            "l2_distance": 24.226825714111328,
+            "attack_time_seconds": 101.14865589141846
+        },
+        {
+            "image": "ILSVRC2012_val_00035085.JPEG",
+            "original_class": 136,
+            "original_class_name": "European_gallinule",
+            "original_confidence": 0.9982768297195435,
+            "adversarial_class": 136,
+            "adversarial_class_name": "European_gallinule",
+            "adversarial_confidence": 0.9959892630577087,
+            "confidence_for_original_class": 0.9959892630577087,
+            "confidence_reduction": 0.002287566661834717,
+            "target_class": 137,
+            "target_class_name": "American_coot",
+            "success": false,
+            "l2_distance": 24.296964645385742,
+            "attack_time_seconds": 98.09206628799438
+        },
+        {
+            "image": "ILSVRC2012_val_00013809.JPEG",
+            "original_class": 150,
+            "original_class_name": "sea_lion",
+            "original_confidence": 0.995552122592926,
+            "adversarial_class": 150,
+            "adversarial_class_name": "sea_lion",
+            "adversarial_confidence": 0.962929904460907,
+            "confidence_for_original_class": 0.962929904460907,
+            "confidence_reduction": 0.03262221813201904,
+            "target_class": 460,
+            "target_class_name": "breakwater",
+            "success": false,
+            "l2_distance": 24.265361785888672,
+            "attack_time_seconds": 99.59769916534424
+        }
+    ],
+    "total_attack_time_seconds": 404.9561469554901,
+    "summary": {
+        "total_images": 4,
+        "successful_attacks": 0,
+        "success_rate": 0.0,
+        "average_l2_distance": 24.265880584716797,
+        "average_confidence_reduction": 0.01595744490623474,
+        "total_attack_time_seconds": 404.9561469554901,
+        "statistics": {
+            "original_confidence": {
+                "median": 0.9969144761562347,
+                "mean": 0.9906178116798401,
+                "std": 0.011989251323713751
+            },
+            "adversarial_confidence": {
+                "median": 0.977237194776535,
+                "mean": 0.9746603667736053,
+                "std": 0.019867842044075556
+            },
+            "l2_distance": {
+                "median": 24.269868850708008,
+                "mean": 24.265880584716797,
+                "std": 0.025317689403891563
+            }
+        }
+    }
+}

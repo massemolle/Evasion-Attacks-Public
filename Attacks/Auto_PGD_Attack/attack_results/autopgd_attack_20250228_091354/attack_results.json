@@ -1,0 +1,149 @@
+{
+    "attack_name": "AutoPGD",
+    "parameters": {
+        "epsilon": 0.12549019607843137,
+        "step_size": 0.00784313725490196,
+        "num_steps": 100
+    },
+    "results": [
+        {
+            "image": "000000368961.jpg",
+            "original_class": 191,
+            "original_confidence": 0.8123452067375183,
+            "adversarial_class": 191,
+            "adversarial_confidence": 0.2254241555929184,
+            "confidence_for_original_class": 0.2254241555929184,
+            "confidence_reduction": 0.5869210362434387,
+            "target_class": 192,
+            "success": false,
+            "l2_distance": 46.58937072753906,
+            "attack_time_seconds": 112.74502396583557
+        },
+        {
+            "image": "000000247838.jpg",
+            "original_class": 537,
+            "original_confidence": 0.8408807516098022,
+            "adversarial_class": 537,
+            "adversarial_confidence": 0.45531249046325684,
+            "confidence_for_original_class": 0.45531249046325684,
+            "confidence_reduction": 0.3855682611465454,
+            "target_class": 538,
+            "success": false,
+            "l2_distance": 43.18633270263672,
+            "attack_time_seconds": 111.97048473358154
+        },
+        {
+            "image": "000000032038.jpg",
+            "original_class": 963,
+            "original_confidence": 0.9586231112480164,
+            "adversarial_class": 963,
+            "adversarial_confidence": 0.5677111148834229,
+            "confidence_for_original_class": 0.5677111148834229,
+            "confidence_reduction": 0.3909119963645935,
+            "target_class": 964,
+            "success": false,
+            "l2_distance": 45.15230178833008,
+            "attack_time_seconds": 113.26367712020874
+        },
+        {
+            "image": "000000485480.jpg",
+            "original_class": 981,
+            "original_confidence": 0.8550478219985962,
+            "adversarial_class": 981,
+            "adversarial_confidence": 0.8025994896888733,
+            "confidence_for_original_class": 0.8025994896888733,
+            "confidence_reduction": 0.0524483323097229,
+            "target_class": 982,
+            "success": false,
+            "l2_distance": 48.029640197753906,
+            "attack_time_seconds": 112.90309548377991
+        },
+        {
+            "image": "000000252216.jpg",
+            "original_class": 355,
+            "original_confidence": 0.993128776550293,
+            "adversarial_class": 355,
+            "adversarial_confidence": 0.891244113445282,
+            "confidence_for_original_class": 0.891244113445282,
+            "confidence_reduction": 0.10188466310501099,
+            "target_class": 356,
+            "success": false,
+            "l2_distance": 47.936790466308594,
+            "attack_time_seconds": 112.38012456893921
+        },
+        {
+            "image": "000000163117.jpg",
+            "original_class": 701,
+            "original_confidence": 0.8055899143218994,
+            "adversarial_class": 701,
+            "adversarial_confidence": 0.33402132987976074,
+            "confidence_for_original_class": 0.33402132987976074,
+            "confidence_reduction": 0.47156858444213867,
+            "target_class": 702,
+            "success": false,
+            "l2_distance": 47.18937683105469,
+            "attack_time_seconds": 112.49600625038147
+        },
+        {
+            "image": "000000553221.jpg",
+            "original_class": 701,
+            "original_confidence": 0.9937593936920166,
+            "adversarial_class": 701,
+            "adversarial_confidence": 0.19664178788661957,
+            "confidence_for_original_class": 0.19664178788661957,
+            "confidence_reduction": 0.7971175909042358,
+            "target_class": 702,
+            "success": false,
+            "l2_distance": 47.29201889038086,
+            "attack_time_seconds": 113.21090579032898
+        },
+        {
+            "image": "000000326542.jpg",
+            "original_class": 795,
+            "original_confidence": 0.9966729879379272,
+            "adversarial_class": 795,
+            "adversarial_confidence": 0.9660811424255371,
+            "confidence_for_original_class": 0.9660811424255371,
+            "confidence_reduction": 0.030591845512390137,
+            "target_class": 796,
+            "success": false,
+            "l2_distance": 46.760101318359375,
+            "attack_time_seconds": 114.1992437839508
+        },
+        {
+            "image": "000000347265.jpg",
+            "original_class": 537,
+            "original_confidence": 0.8536123037338257,
+            "adversarial_class": 537,
+            "adversarial_confidence": 0.5159887671470642,
+            "confidence_for_original_class": 0.5159887671470642,
+            "confidence_reduction": 0.3376235365867615,
+            "target_class": 538,
+            "success": false,
+            "l2_distance": 48.06102752685547,
+            "attack_time_seconds": 112.36240649223328
+        },
+        {
+            "image": "000000345361.jpg",
+            "original_class": 467,
+            "original_confidence": 0.8428060412406921,
+            "adversarial_class": 467,
+            "adversarial_confidence": 0.23420053720474243,
+            "confidence_for_original_class": 0.23420053720474243,
+            "confidence_reduction": 0.6086055040359497,
+            "target_class": 468,
+            "success": false,
+            "l2_distance": 48.13886642456055,
+            "attack_time_seconds": 112.9760479927063
+        }
+    ],
+    "total_attack_time_seconds": 1128.5070161819458,
+    "summary": {
+        "total_images": 10,
+        "successful_attacks": 0,
+        "success_rate": 0.0,
+        "average_l2_distance": 46.833580017089844,
+        "average_confidence_reduction": 0.3763241171836853,
+        "total_attack_time_seconds": 1128.5070161819458
+    }
+}

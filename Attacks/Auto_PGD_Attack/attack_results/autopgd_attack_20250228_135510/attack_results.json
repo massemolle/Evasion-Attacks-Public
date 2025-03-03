@@ -1,0 +1,51 @@
+{
+    "attack_name": "AutoPGD",
+    "parameters": {
+        "epsilon": 0.12549019607843137,
+        "step_size": 0.011764705882352941,
+        "num_steps": 100
+    },
+    "results": [
+        {
+            "image": "000000368961.jpg",
+            "original_class": 191,
+            "original_class_name": "Airedale",
+            "original_confidence": 0.8123452067375183,
+            "adversarial_class": 184,
+            "adversarial_class_name": "Irish_terrier",
+            "adversarial_confidence": 0.45445582270622253,
+            "confidence_for_original_class": 0.4433106780052185,
+            "confidence_reduction": 0.3690345287322998,
+            "target_class": 184,
+            "target_class_name": "Irish_terrier",
+            "success": true,
+            "l2_distance": 47.51820755004883,
+            "attack_time_seconds": 98.4000129699707
+        },
+        {
+            "image": "000000247838.jpg",
+            "original_class": 537,
+            "original_class_name": "dogsled",
+            "original_confidence": 0.8408807516098022,
+            "adversarial_class": 974,
+            "adversarial_class_name": "geyser",
+            "adversarial_confidence": 0.9733254313468933,
+            "confidence_for_original_class": 0.020916316658258438,
+            "confidence_reduction": 0.8199644349515438,
+            "target_class": 974,
+            "target_class_name": "geyser",
+            "success": true,
+            "l2_distance": 48.2782096862793,
+            "attack_time_seconds": 98.46035575866699
+        }
+    ],
+    "total_attack_time_seconds": 196.8603687286377,
+    "summary": {
+        "total_images": 2,
+        "successful_attacks": 2,
+        "success_rate": 1.0,
+        "average_l2_distance": 47.89820861816406,
+        "average_confidence_reduction": 0.5944994818419218,
+        "total_attack_time_seconds": 196.8603687286377
+    }
+}
