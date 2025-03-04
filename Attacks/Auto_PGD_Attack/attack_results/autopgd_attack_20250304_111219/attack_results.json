@@ -1,0 +1,101 @@
+{
+    "attack_name": "AutoPGD",
+    "parameters": {
+        "epsilon": 0.06274509803921569,
+        "step_size": 0.00784313725490196,
+        "num_steps": 100
+    },
+    "results": [
+        {
+            "image": "ILSVRC2012_val_00045528.JPEG",
+            "original_class": 861,
+            "original_class_name": "toilet_seat",
+            "original_confidence": 0.9739664196968079,
+            "adversarial_class": 861,
+            "adversarial_class_name": "toilet_seat",
+            "adversarial_confidence": 0.9317088723182678,
+            "confidence_for_original_class": 0.9317088723182678,
+            "confidence_reduction": 0.04225754737854004,
+            "target_class": 748,
+            "target_class_name": "purse",
+            "success": false,
+            "l2_distance": 24.00042152404785,
+            "attack_time_seconds": 80.74509835243225
+        },
+        {
+            "image": "ILSVRC2012_val_00021541.JPEG",
+            "original_class": 448,
+            "original_class_name": "birdhouse",
+            "original_confidence": 0.9858518838882446,
+            "adversarial_class": 448,
+            "adversarial_class_name": "birdhouse",
+            "adversarial_confidence": 0.925426185131073,
+            "confidence_for_original_class": 0.925426185131073,
+            "confidence_reduction": 0.06042569875717163,
+            "target_class": 449,
+            "target_class_name": "boathouse",
+            "success": false,
+            "l2_distance": 23.556621551513672,
+            "attack_time_seconds": 84.75347113609314
+        },
+        {
+            "image": "ILSVRC2012_val_00017272.JPEG",
+            "original_class": 904,
+            "original_class_name": "window_screen",
+            "original_confidence": 0.999505877494812,
+            "adversarial_class": 904,
+            "adversarial_class_name": "window_screen",
+            "adversarial_confidence": 0.9991866946220398,
+            "confidence_for_original_class": 0.9991866946220398,
+            "confidence_reduction": 0.0003191828727722168,
+            "target_class": 556,
+            "target_class_name": "fire_screen",
+            "success": false,
+            "l2_distance": 24.287612915039062,
+            "attack_time_seconds": 88.65081095695496
+        },
+        {
+            "image": "ILSVRC2012_val_00015212.JPEG",
+            "original_class": 902,
+            "original_class_name": "whistle",
+            "original_confidence": 0.9982409477233887,
+            "adversarial_class": 902,
+            "adversarial_class_name": "whistle",
+            "adversarial_confidence": 0.8734773397445679,
+            "confidence_for_original_class": 0.8734773397445679,
+            "confidence_reduction": 0.1247636079788208,
+            "target_class": 783,
+            "target_class_name": "screw",
+            "success": false,
+            "l2_distance": 24.1297607421875,
+            "attack_time_seconds": 83.67246007919312
+        }
+    ],
+    "total_attack_time_seconds": 337.82184052467346,
+    "summary": {
+        "total_images": 4,
+        "successful_attacks": 0,
+        "success_rate": 0.0,
+        "average_l2_distance": 23.99360466003418,
+        "average_confidence_reduction": 0.05694150924682617,
+        "total_attack_time_seconds": 337.82184052467346,
+        "statistics": {
+            "original_confidence": {
+                "median": 0.9920464158058167,
+                "mean": 0.9893912822008133,
+                "std": 0.010381176974521325
+            },
+            "adversarial_confidence": {
+                "median": 0.9285675287246704,
+                "mean": 0.9324497729539871,
+                "std": 0.04466946471591474
+            },
+            "l2_distance": {
+                "median": 24.06509017944336,
+                "mean": 23.99360466003418,
+                "std": 0.27202025055885315
+            }
+        }
+    },
+    "num_model_queries": 29
+}

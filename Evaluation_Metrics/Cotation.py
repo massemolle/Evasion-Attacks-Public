@@ -11,45 +11,13 @@ except ImportError:
 class CotationTable:
     """
     CotationTable evaluates the difficulty of an evasion attack based on several criteria.
-    
-    Evaluation Criteria:
-    
-    1. Elapsed Time / Feasibility:
-       - Considers the time needed to mount the attack, the attack’s success rate, 
-         the average L2 perturbation size, and other relevant metrics.
-       - Feasibility is classified as High, Medium, or Low based on these factors.
-       
-    2. Attacker Knowledge:
-       - Laymen: Can follow publicly available instructions and operate off-the-shelf tools.
-       - Proficient: Has basic training/experience with standard attack techniques.
-       - Expert: Possesses deep technical skills and can implement complex or novel attacks.
-       - Multiple experts: A coordinated team or a single individual with interdisciplinary expertise.
-       
-    3. Target Knowledge:
-       - White-box: Complete access to the target (e.g., internal model details) which might be harder to obtain.
-       - Gray-box: Partial knowledge about the target.
-       - Black-box: Limited knowledge; only observable input/output behavior.
-       
-    4. Equipment:
-       - Evaluates the hardware used. In this example, we assume a basic computer, but more powerful 
-         equipment (high-end PC, server/cloud resources, specialized GPU clusters) would affect the attack's feasibility.
-       
-    5. Extrapolation Time:
-       - An estimation of the time needed to build and perform the attack on a more complex system.
-       - Options include: "1 day", "1 week", "Multiple weeks", "Months".
-       
-    Additional Metrics Included:
-       - GPU/CPU consumption (current snapshot).
-       - Number of model queries performed during the attack (if reported).
-       - Attack parameters (epsilon, step_size, num_steps)
-       
-    The module calculates a total difficulty score normalized to a 0-10 scale (with 10 being the most difficult)
-    and produces a detailed rating that includes both the numeric score and qualitative considerations.
+    Evaluation criteria include feasibility (elapsed time, success rate, perturbation size),
+    attacker knowledge, target knowledge, equipment used, and extrapolation time.
+    Additional metrics such as resource usage and the number of model queries are also reported.
+    The overall difficulty score is normalized to a 0-10 scale.
     """
     
-    # Define rating scales for each evaluation criterion
     RATING_SCALE = {
-        #time for the attack to be a success
         "elapsed_time": {
             "Very Fast (< 1 min)": 1,
             "Fast (1-10 min)": 2,
@@ -95,24 +63,15 @@ class CotationTable:
         self.resource_usage = self._get_resource_usage()
     
     def load_attack_results(self):
-        """
-        Loads the attack results from the specified JSON file.
-        """
+        """Loads the attack results from the specified JSON file."""
         if not os.path.exists(self.attack_results_path):
             raise FileNotFoundError(f"Attack results file not found: {self.attack_results_path}")
-        
         with open(self.attack_results_path, 'r') as f:
             self.results = json.load(f)
-        
         print(f"Loaded attack results for {self.results.get('attack_name', 'Unknown Attack')}")
     
     def _get_resource_usage(self):
-        """
-        Get a snapshot of current resource usage: CPU, memory and (if available) GPU.
-        
-        Returns:
-            dict: Resource usage metrics.
-        """
+        """Get a snapshot of current resource usage: CPU, memory, and GPU (if available)."""
         cpu_usage = psutil.cpu_percent(interval=1)
         memory = psutil.virtual_memory()
         mem_usage = memory.percent
@@ -121,7 +80,6 @@ class CotationTable:
         if GPUtil is not None:
             gpus = GPUtil.getGPUs()
             if gpus:
-                # For simplicity, we record the first GPU's usage
                 gpu = gpus[0]
                 gpu_info = {
                     "gpu_id": gpu.id,
@@ -138,10 +96,8 @@ class CotationTable:
     
     def evaluate_feasibility(self):
         """
-        Evaluate the attack's feasibility based on elapsed time, success rate, and L2 perturbation.
-        
-        Returns:
-            dict: A dictionary containing the feasibility ratings and corresponding scores.
+        Evaluate the attack's feasibility based on elapsed time, success rate, L2 perturbation, and confidence drop.
+        Returns a dictionary with feasibility ratings and scores.
         """
         summary = self.results.get("summary", {})
         total_time = summary.get("total_attack_time_seconds", 0)
@@ -185,8 +141,8 @@ class CotationTable:
             perturbation_rating = "Very visible"
         
         overall_feasibility = (
-            "High" if (success_rating in ["Excellent", "Good"] and perturbation_rating in ["Imperceptible", "Slightly visible"]) 
-            else "Medium" if (success_rating == "Moderate" or perturbation_rating == "Noticeable") 
+            "High" if (success_rating in ["Excellent", "Good"] and perturbation_rating in ["Imperceptible", "Slightly visible"])
+            else "Medium" if (success_rating == "Moderate" or perturbation_rating == "Noticeable")
             else "Low"
         )
         
@@ -202,20 +158,11 @@ class CotationTable:
                         equipment="Basic (personal computer)", extrapolation_time="1 week"):
         """
         Evaluate the attack using multiple criteria and produce an overall difficulty rating.
-        
-        Args:
-            attacker_knowledge (str): Attacker's knowledge level.
-            target_knowledge (str): Level of target knowledge.
-            equipment (str): Equipment used to perform the attack.
-            extrapolation_time (str): Estimated time to adapt the attack for a more complex system.
-        
-        Returns:
-            dict: A comprehensive evaluation including difficulty factors, feasibility metrics,
-                  overall difficulty level and score, resource usage, and attack parameters.
+        All metrics (including the ratio metric in percent) are computed here.
         """
         feasibility = self.evaluate_feasibility()
         
-        # Retrieve scores from the defined rating scales
+        # Retrieve scores from defined rating scales
         attacker_score = self.RATING_SCALE["attacker_knowledge"].get(attacker_knowledge, 0)
         target_score = self.RATING_SCALE["target_knowledge"].get(target_knowledge, 0)
         equipment_score = self.RATING_SCALE["equipment"].get(equipment, 0)
@@ -236,13 +183,22 @@ class CotationTable:
         else:
             difficulty_level = "Very Difficult"
         
+        summary = self.results.get("summary", {})
+        avg_l2 = summary.get("average_l2_distance", 1)
+        avg_conf = summary.get("average_confidence_reduction", 0)
+        num_queries = self.results.get("num_model_queries", 0)
+        
+        # Compute ratio metric in percent: (avg confidence drop / avg L2 drop) * 100
+        ratio_metric_percent = (avg_conf / avg_l2 * 100) if avg_l2 > 0 else 0
+        
         evaluation = {
             "attack_name": self.results.get("attack_name", "Unknown Attack"),
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "attack_parameters": self.results.get("parameters", {}),
             "resource_usage": self.resource_usage,
-            "model_queries": self.results.get("num_model_queries", "Not Reported"),
+            "num_model_queries": num_queries,
             "feasibility": feasibility,
+            "ratio_metric_percent: average conf/ average L2": f"{avg_conf} / {avg_l2} = {ratio_metric_percent}",
             "difficulty_factors": {
                 "attacker_knowledge": {
                     "level": attacker_knowledge,

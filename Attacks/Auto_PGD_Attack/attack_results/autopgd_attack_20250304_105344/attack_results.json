@@ -1,0 +1,101 @@
+{
+    "attack_name": "AutoPGD",
+    "parameters": {
+        "epsilon": 0.06274509803921569,
+        "step_size": 0.00784313725490196,
+        "num_steps": 100
+    },
+    "results": [
+        {
+            "image": "ILSVRC2012_val_00010898.JPEG",
+            "original_class": 845,
+            "original_class_name": "syringe",
+            "original_confidence": 0.9919889569282532,
+            "adversarial_class": 845,
+            "adversarial_class_name": "syringe",
+            "adversarial_confidence": 0.8567752838134766,
+            "confidence_for_original_class": 0.8567752838134766,
+            "confidence_reduction": 0.1352136731147766,
+            "target_class": 662,
+            "target_class_name": "modem",
+            "success": false,
+            "l2_distance": 24.213077545166016,
+            "attack_time_seconds": 80.96553897857666
+        },
+        {
+            "image": "ILSVRC2012_val_00008670.JPEG",
+            "original_class": 412,
+            "original_class_name": "ashcan",
+            "original_confidence": 0.8775408864021301,
+            "adversarial_class": 412,
+            "adversarial_class_name": "ashcan",
+            "adversarial_confidence": 0.6428551077842712,
+            "confidence_for_original_class": 0.6428551077842712,
+            "confidence_reduction": 0.2346857786178589,
+            "target_class": 877,
+            "target_class_name": "turnstile",
+            "success": false,
+            "l2_distance": 24.03689193725586,
+            "attack_time_seconds": 81.10619831085205
+        },
+        {
+            "image": "ILSVRC2012_val_00007383.JPEG",
+            "original_class": 562,
+            "original_class_name": "fountain",
+            "original_confidence": 0.942215085029602,
+            "adversarial_class": 562,
+            "adversarial_class_name": "fountain",
+            "adversarial_confidence": 0.5041463375091553,
+            "confidence_for_original_class": 0.5041463375091553,
+            "confidence_reduction": 0.4380687475204468,
+            "target_class": 327,
+            "target_class_name": "starfish",
+            "success": false,
+            "l2_distance": 24.25408172607422,
+            "attack_time_seconds": 80.60358238220215
+        },
+        {
+            "image": "ILSVRC2012_val_00031290.JPEG",
+            "original_class": 132,
+            "original_class_name": "American_egret",
+            "original_confidence": 0.9290305376052856,
+            "adversarial_class": 132,
+            "adversarial_class_name": "American_egret",
+            "adversarial_confidence": 0.8031384348869324,
+            "confidence_for_original_class": 0.8031384348869324,
+            "confidence_reduction": 0.12589210271835327,
+            "target_class": 89,
+            "target_class_name": "sulphur-crested_cockatoo",
+            "success": false,
+            "l2_distance": 24.262500762939453,
+            "attack_time_seconds": 80.20063304901123
+        }
+    ],
+    "total_attack_time_seconds": 322.8759527206421,
+    "summary": {
+        "total_images": 4,
+        "successful_attacks": 0,
+        "success_rate": 0.0,
+        "average_l2_distance": 24.191638946533203,
+        "average_confidence_reduction": 0.2334650754928589,
+        "total_attack_time_seconds": 322.8759527206421,
+        "statistics": {
+            "original_confidence": {
+                "median": 0.9356228113174438,
+                "mean": 0.9351938664913177,
+                "std": 0.04073337864584671
+            },
+            "adversarial_confidence": {
+                "median": 0.7229967713356018,
+                "mean": 0.7017287909984589,
+                "std": 0.13858956247665413
+            },
+            "l2_distance": {
+                "median": 24.233579635620117,
+                "mean": 24.191638946533203,
+                "std": 0.091278076171875
+            }
+        }
+    },
+    "num_model_queries": 26
+}

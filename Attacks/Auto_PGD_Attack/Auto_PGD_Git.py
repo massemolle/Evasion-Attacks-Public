@@ -15,38 +15,44 @@ sys.path.append('../../')
 from model_to_attack.ResNet50_model import get_resnet50_model, load_and_preprocess_image
 
 class AutoPGDAttack:
-    def __init__(self, model, epsilon=64/255, step_size=3/255, num_steps=200):
+    def __init__(self, model, epsilon=16/255, step_size=2/255, num_steps=100):
         """
-        Initialize Auto-PGD attack with stronger parameters for higher success rate
+        Initialize Auto-PGD attack with stronger parameters for higher success rate.
         
         Args:
-            model: The model to attack
-            epsilon: Maximum perturbation (significantly increased)
-            step_size: Step size for each iteration (increased)
-            num_steps: Number of iterations (significantly increased)
+            model: The model to attack.
+            epsilon: Maximum perturbation.
+            step_size: Step size for each iteration.
+            num_steps: Number of iterations.
         """
         self.model = model
         self.epsilon = epsilon
         self.step_size = step_size
         self.num_steps = num_steps
+        self.query_count = 0  # Counter for model queries
         
-        # Create directory for results if it doesn't exist
+        # Create directory for results if it doesn't exist.
         self.results_dir = os.path.join(os.path.dirname(__file__), 'attack_results')
         os.makedirs(self.results_dir, exist_ok=True)
+    
+    def model_predict(self, input_data):
+        """Wrapper to count model queries and perform prediction."""
+        self.query_count += 1
+        return self.model.predict(input_data)
     
     def generate_adversarial_example(self, img_array):
         """
         Generate adversarial example using a stronger PGD attack with momentum.
         
         Args:
-            img_array: Input image as numpy array (preprocessed for ResNet50)
+            img_array: Preprocessed input image (for ResNet50).
             
         Returns:
             Tuple: (adversarial image as numpy array, original class, target class, 
                     original confidence, original class name, target class name)
         """
         # Get original prediction
-        original_pred = self.model.predict(img_array)
+        original_pred = self.model_predict(img_array)
         original_class = np.argmax(original_pred, axis=1)[0]
         original_confidence = float(original_pred[0][original_class])
         original_class_name = decode_predictions(original_pred, top=1)[0][0][1]
@@ -62,14 +68,13 @@ class AutoPGDAttack:
         # Momentum decay factor
         momentum_decay = 0.9
         
-        # Define the attack loop as a tf.function for efficiency
         @tf.function
         def attack_loop(adv_img, grad_momentum):
             for _ in tf.range(self.num_steps):
                 with tf.GradientTape() as tape:
                     tape.watch(adv_img)
                     logits = self.model(adv_img)
-                    # For targeted attack: maximize the target logit by minimizing its negative
+                    # Targeted attack: maximize target logit by minimizing its negative
                     target_onehot = tf.one_hot([target_class], depth=1000)
                     loss = -tf.reduce_sum(target_onehot * tf.nn.softmax(logits))
                 gradients = tape.gradient(loss, adv_img)
@@ -90,9 +95,9 @@ class AutoPGDAttack:
         for restart in range(3):
             if restart > 0:
                 noise = tf.random.uniform(shape=img_array.shape,
-                                          minval=-0.1*self.epsilon,
-                                          maxval=0.1*self.epsilon,
-                                          dtype=tf.float32)
+                                            minval=-0.1*self.epsilon,
+                                            maxval=0.1*self.epsilon,
+                                            dtype=tf.float32)
                 adv_img_init = tf.clip_by_value(img_tensor + noise,
                                                 tf.reduce_min(img_tensor),
                                                 tf.reduce_max(img_tensor))
@@ -102,9 +107,9 @@ class AutoPGDAttack:
             grad_momentum = tf.zeros_like(adv_img_init)
             adv_img_final, _ = attack_loop(adv_img_init, grad_momentum)
             
-            # Evaluate the adversarial example for this restart (no .numpy() call needed)
-            adv_pred = self.model.predict(adv_img_final)
-            current_loss = adv_pred[0][target_class]  # Use the value directly
+            # Evaluate adversarial example for this restart
+            adv_pred = self.model_predict(adv_img_final)
+            current_loss = adv_pred[0][target_class]
             if current_loss < best_adv_loss:
                 best_adv_loss = current_loss
                 best_adv_img = adv_img_final.numpy()
@@ -115,12 +120,11 @@ class AutoPGDAttack:
         """
         Randomly pick images from subfolders under 'base_dir' (one folder per class).
         
-        Returns a list of tuples: (img_path, img_array, class_idx, confidence)
+        Returns:
+            List of tuples: (img_path, img_array, class_idx, confidence)
         """
-        class_folders = [
-            d for d in os.listdir(base_dir)
-            if os.path.isdir(os.path.join(base_dir, d))
-        ]
+        class_folders = [d for d in os.listdir(base_dir)
+                         if os.path.isdir(os.path.join(base_dir, d))]
         
         high_confidence_images = []
         max_attempts = 1000
@@ -129,28 +133,22 @@ class AutoPGDAttack:
         while len(high_confidence_images) < max_images and attempts < max_attempts:
             attempts += 1
             
-            # Random folder (class)
             random_folder = random.choice(class_folders)
             folder_path = os.path.join(base_dir, random_folder)
             
-            # Random image in that folder
-            images_in_class = [
-                f for f in os.listdir(folder_path)
-                if f.lower().endswith(('.jpg', '.jpeg', '.png'))
-            ]
+            images_in_class = [f for f in os.listdir(folder_path)
+                               if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
             if not images_in_class:
                 continue
             
             random_image = random.choice(images_in_class)
             img_path = os.path.join(folder_path, random_image)
             
-            # Load & check confidence
             try:
                 img_array = load_and_preprocess_image(img_path)
-                pred = self.model.predict(img_array)
+                pred = self.model_predict(img_array)
                 class_idx = np.argmax(pred, axis=1)[0]
                 confidence = float(pred[0][class_idx])
-                
                 if confidence >= confidence_threshold:
                     high_confidence_images.append((img_path, img_array, class_idx, confidence))
             except Exception as e:
@@ -161,8 +159,8 @@ class AutoPGDAttack:
 
     def attack_images(self, base_dir, max_images=10, confidence_threshold=0.8):
         """
-        Randomly pick 'max_images' from subfolders of 'base_dir' (each subfolder is a class)
-        and attack each image if the model's confidence >= confidence_threshold.
+        Randomly select 'max_images' from subfolders of 'base_dir' (each subfolder is a class)
+        and attack each image if its confidence is above the threshold.
         Also computes additional statistics over the predictions.
         """
         # Create timestamp for this attack run
@@ -182,12 +180,7 @@ class AutoPGDAttack:
         }
         
         print("Selecting random high-confidence images...")
-        high_confidence_images = self._pick_random_images(
-            base_dir=base_dir,
-            max_images=max_images,
-            confidence_threshold=confidence_threshold
-        )
-        
+        high_confidence_images = self._pick_random_images(base_dir, max_images, confidence_threshold)
         print(f"Found {len(high_confidence_images)} images with confidence >= {confidence_threshold}")
         
         if not high_confidence_images:
@@ -209,7 +202,7 @@ class AutoPGDAttack:
                 attack_time = time.time() - start_time
                 total_attack_time += attack_time
                 
-                adv_pred = self.model.predict(adv_img)
+                adv_pred = self.model_predict(adv_img)
                 adv_class = np.argmax(adv_pred, axis=1)[0]
                 adv_class_name = decode_predictions(adv_pred, top=1)[0][0][1]
                 adv_conf_for_orig = float(adv_pred[0][original_class])
@@ -245,7 +238,7 @@ class AutoPGDAttack:
                 }
                 attack_results["results"].append(result)
                 
-                # Visualization
+                # Visualization for this image
                 fig, axes = plt.subplots(1, 3, figsize=(20, 7))
                 def deprocess_image(preprocessed_img):
                     img = preprocessed_img.copy()
@@ -319,7 +312,10 @@ class AutoPGDAttack:
         
         attack_results["summary"]["statistics"] = statistics
         
-        # Save JSON
+        # Record the total model query count
+        attack_results["num_model_queries"] = self.query_count
+        
+        # Save results to JSON
         with open(os.path.join(attack_dir, "attack_results.json"), 'w') as f:
             json.dump(attack_results, f, indent=4)
         
@@ -337,7 +333,7 @@ class AutoPGDAttack:
         return attack_results
     
     def _create_results_visualization(self, image_data, results, output_dir):
-        """Create a detailed visualization of attack results"""
+        """Create detailed visualizations of the attack results."""
         conf_reductions = [r["confidence_reduction"] for r in results["results"]]
         l2_distances = [r["l2_distance"] for r in results["results"]]
         attack_times = [r["attack_time_seconds"] for r in results["results"]]
@@ -414,9 +410,9 @@ def main():
     )
     
     # Dataset structure: ImageNet-Mini/images/<class_folder>/<images>
-    images_dir = "../../Images/ImageNet-Mini/images"
+    images_dir = "Images/ImageNet-Mini/images"
     
-    # Attack random images from subfolders (e.g. 1000 images, confidence threshold 0.5)
+    # Attack random images from subfolders
     attack_results = attack.attack_images(
         base_dir=images_dir,
         max_images=4,
