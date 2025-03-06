@@ -1,0 +1,85 @@
+{
+    "attack_name": "ART_CW_attack_L2",
+    "parameters": {
+        "norm": "L2",
+        "max_iter": 100,
+        "learning_rate": 0.01,
+        "confidence": 0
+    },
+    "results": [
+        {
+            "image": "ILSVRC2012_val_00002791.JPEG",
+            "original_class": 87,
+            "original_class_name": "African_grey",
+            "original_confidence": 0.9999653100967407,
+            "adversarial_class": 87,
+            "adversarial_class_name": "African_grey",
+            "adversarial_confidence": 0.9999653100967407,
+            "confidence_for_original_class": 0.9999653100967407,
+            "confidence_reduction": 0.0,
+            "target_class": 88,
+            "target_class_name": "macaw",
+            "success": false,
+            "l2_distance": 0.0,
+            "attack_time_seconds": 4026.1850967407227
+        },
+        {
+            "image": "ILSVRC2012_val_00026419.JPEG",
+            "original_class": 726,
+            "original_class_name": "plane",
+            "original_confidence": 0.9999961853027344,
+            "adversarial_class": 726,
+            "adversarial_class_name": "plane",
+            "adversarial_confidence": 0.9999961853027344,
+            "confidence_for_original_class": 0.9999961853027344,
+            "confidence_reduction": 0.0,
+            "target_class": 473,
+            "target_class_name": "can_opener",
+            "success": false,
+            "l2_distance": 0.0,
+            "attack_time_seconds": 3788.9457428455353
+        },
+        {
+            "image": "ILSVRC2012_val_00032424.JPEG",
+            "original_class": 637,
+            "original_class_name": "mailbox",
+            "original_confidence": 0.9999605417251587,
+            "adversarial_class": 637,
+            "adversarial_class_name": "mailbox",
+            "adversarial_confidence": 0.9999605417251587,
+            "confidence_for_original_class": 0.9999605417251587,
+            "confidence_reduction": 0.0,
+            "target_class": 412,
+            "target_class_name": "ashcan",
+            "success": false,
+            "l2_distance": 0.0,
+            "attack_time_seconds": 3788.843161582947
+        },
+        {
+            "image": "ILSVRC2012_val_00036539.JPEG",
+            "original_class": 930,
+            "original_class_name": "French_loaf",
+            "original_confidence": 0.9201227426528931,
+            "adversarial_class": 930,
+            "adversarial_class_name": "French_loaf",
+            "adversarial_confidence": 0.9201227426528931,
+            "confidence_for_original_class": 0.9201227426528931,
+            "confidence_reduction": 0.0,
+            "target_class": 415,
+            "target_class_name": "bakery",
+            "success": false,
+            "l2_distance": 0.0,
+            "attack_time_seconds": 10883.981809854507
+        }
+    ],
+    "total_attack_time_seconds": 22487.955811023712,
+    "summary": {
+        "total_images": 4,
+        "successful_attacks": 0,
+        "success_rate": 0.0,
+        "average_l2_distance": 0.0,
+        "average_confidence_reduction": 0.0,
+        "total_attack_time_seconds": 22487.955811023712
+    },
+    "num_model_queries": 17
+}

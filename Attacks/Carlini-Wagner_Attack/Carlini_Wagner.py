@@ -44,7 +44,6 @@ class ART_CW_Attack:
         
         # Wrap the TensorFlow model with ART's classifier.
         # Note: You might need to adjust clip_values and preprocessing to match your ResNet50 pipeline.
-        # Wrap the TensorFlow model with ART's classifier.
         self.classifier = TensorFlowV2Classifier(
             model=self.model,
             loss_object=tf.keras.losses.CategoricalCrossentropy(),
@@ -52,16 +51,15 @@ class ART_CW_Attack:
             nb_classes=1000,
             clip_values=(0.0, 255.0)
         )
-
-        # Instantiate the ART Carlini-Wagner L2 attack using "classifier" instead of "estimator"
+        
+        # Instantiate the ART Carlini-Wagner L2 attack
         self.attack = CarliniL2Method(
-            classifier=self.classifier,
+            estimator=self.classifier,
             confidence=self.confidence,
             max_iter=self.max_iter,
             learning_rate=self.learning_rate,
             batch_size=self.batch_size
         )
-
 
     def model_predict(self, input_data):
         """Wrapper for model prediction (ART classifier)."""
@@ -299,7 +297,7 @@ def main():
         model=model,
         norm='L2',
         batch_size=1,
-        max_iter=100,
+        max_iter=1000,
         learning_rate=1e-2,
         confidence=0
     )
@@ -310,7 +308,7 @@ def main():
     # Attack random images from subfolders
     attack_results = attack.attack_images(
         base_dir=images_dir,
-        max_images=10,
+        max_images=4,
         confidence_threshold=0.8
     )
     

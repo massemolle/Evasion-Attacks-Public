@@ -1,0 +1,86 @@
+{
+    "attack_name": "CW_attack_L2",
+    "parameters": {
+        "norm": "L2",
+        "c": 0.01,
+        "kappa": 0,
+        "learning_rate": 0.01,
+        "max_iterations": 100
+    },
+    "results": [
+        {
+            "image": "ILSVRC2012_val_00024348.JPEG",
+            "original_class": 564,
+            "original_class_name": "four-poster",
+            "original_confidence": 0.9827081561088562,
+            "adversarial_class": 564,
+            "adversarial_class_name": "four-poster",
+            "adversarial_confidence": 0.9827081561088562,
+            "confidence_for_original_class": 0.9827081561088562,
+            "confidence_reduction": 0.0,
+            "target_class": 894,
+            "target_class_name": "wardrobe",
+            "success": false,
+            "l2_distance": 0.0019090187270194292,
+            "attack_time_seconds": 111.35118246078491
+        },
+        {
+            "image": "ILSVRC2012_val_00048242.JPEG",
+            "original_class": 8,
+            "original_class_name": "hen",
+            "original_confidence": 0.9966111779212952,
+            "adversarial_class": 8,
+            "adversarial_class_name": "hen",
+            "adversarial_confidence": 0.9966112971305847,
+            "confidence_for_original_class": 0.9966112971305847,
+            "confidence_reduction": -1.1920928955078125e-07,
+            "target_class": 7,
+            "target_class_name": "cock",
+            "success": false,
+            "l2_distance": 0.0020922597032040358,
+            "attack_time_seconds": 116.79492378234863
+        },
+        {
+            "image": "ILSVRC2012_val_00019816.JPEG",
+            "original_class": 289,
+            "original_class_name": "snow_leopard",
+            "original_confidence": 0.9699568748474121,
+            "adversarial_class": 289,
+            "adversarial_class_name": "snow_leopard",
+            "adversarial_confidence": 0.9699568748474121,
+            "confidence_for_original_class": 0.9699568748474121,
+            "confidence_reduction": 0.0,
+            "target_class": 288,
+            "target_class_name": "leopard",
+            "success": false,
+            "l2_distance": 0.0027127701323479414,
+            "attack_time_seconds": 93.26796579360962
+        },
+        {
+            "image": "ILSVRC2012_val_00017894.JPEG",
+            "original_class": 732,
+            "original_class_name": "Polaroid_camera",
+            "original_confidence": 0.9964002370834351,
+            "adversarial_class": 732,
+            "adversarial_class_name": "Polaroid_camera",
+            "adversarial_confidence": 0.9964002370834351,
+            "confidence_for_original_class": 0.9964002370834351,
+            "confidence_reduction": 0.0,
+            "target_class": 745,
+            "target_class_name": "projector",
+            "success": false,
+            "l2_distance": 0.003143877722322941,
+            "attack_time_seconds": 90.68930983543396
+        }
+    ],
+    "total_attack_time_seconds": 412.1033818721771,
+    "summary": {
+        "total_images": 4,
+        "successful_attacks": 0,
+        "success_rate": 0.0,
+        "average_l2_distance": 0.0024644816294312477,
+        "average_confidence_reduction": -2.9802322387695312e-08,
+        "total_attack_time_seconds": 412.1033818721771
+    },
+    "num_model_queries": 17
+}

@@ -270,13 +270,18 @@ class CotationTable:
         return " ".join(considerations)
 
 if __name__ == "__main__":
-    # Example usage:
-    attack_results_file = os.path.join(
+    # attack result file for Auto PGD:
+    attack_results_file_Auto_PGD = os.path.join(
         os.path.dirname(__file__),
         "..", "Attacks", "Auto_PGD_Attack", "attack_results", "attack_results.json"
     )
+
+    attack_results_file_Carlini_Wagner = os.path.join(
+        os.path.dirname(__file__),
+        "..", "Attacks", "Carlini_Wagner_Attack", "attack_results", "attack_results.json"
+    )
     
-    cotation = CotationTable(attack_results_file)
+    cotation = CotationTable(attack_results_file_Carlini_Wagner)
     evaluation = cotation.evaluate_attack(
         attacker_knowledge="Proficient",
         target_knowledge="White-box",
